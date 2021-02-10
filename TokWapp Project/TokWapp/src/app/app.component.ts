@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'TokWapp';
+  greeting = {'id': 'XXX', 'content': 'Hello World'};
 }
