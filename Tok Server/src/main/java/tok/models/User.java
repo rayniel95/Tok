@@ -6,17 +6,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="Users")
 public class User {
+    @Id String id;
 
-    @Id
-    public String id;
-  
     public String userName;
     public int balance;
     public String password;
-    public Bool isLogged;
+    String token;
   
     public User() {}
-  
+
     public User(String userName, String password) {
       this.userName = userName;
       this.password = password;
@@ -43,10 +41,13 @@ public class User {
     public void setBalance(int balance){
         this.balance = balance;
     }
-    public void setIsLogged(boolean isLogged){
-        this.isLogged = true;
+    public String getId(){
+        return id;
     }
-    public boolean getIsLogged(){
-        return this.isLogged;
+    public String getToken(){
+        return token;
+    }
+    public void setToken(String token){
+        this.token = token;
     }
 }

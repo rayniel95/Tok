@@ -21,8 +21,12 @@ class MockController {
     UserRepository userRepository;
     
     @GetMapping("/user")
-    User getUser(){
-        userRepository.save(new User("ray", "pass"));
-        return new User("ray", "pass");
+    List<User> getUser(){
+        // userRepository.deleteAll();
+        User yo = userRepository.save(new User("ray", "pass"));
+        yo.setToken("jedjeidje");
+        System.out.println(yo.getId());
+        userRepository.save(yo);
+        return userRepository.findByUserName("ray");
     }
 }

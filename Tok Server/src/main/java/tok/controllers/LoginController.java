@@ -1,6 +1,7 @@
 package tok.controllers;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,14 @@ class LoginController {
     UserRepository userRepository;
     
     @PostMapping("/login")
-    login(@RequestBody AuthBody data){
-        
+    String login(@RequestBody AuthBody data){
+        List<User> newUser = userRepository.findByUserName(data.getUserName());
+        if(newUser.size() > 0 && newUser.get(0).getPassword().equals(data.getPassword())){
+            String token = UUID.randomUUID().toString();
+            newUser.get(0).setToken(token);
+            userRepository.save(newUser.get(0));
+            return token;
+        }
+        return "";
     }
 }
