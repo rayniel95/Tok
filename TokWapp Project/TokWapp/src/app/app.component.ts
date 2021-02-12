@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {HttpClient} from '@angular/common/http'
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +7,9 @@ import {HttpClient} from '@angular/common/http'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'TokWapp';
-  greeting = {};
-
+  title = 'Demo';
+  greeting = {"id": "2", "content": "cosa"};
   constructor(private http: HttpClient) {
-    http.get('resource').subscribe(data => this.greeting = data);
+    http.get('http://localhost:8080/resource').subscribe(data => this.greeting["content"] = "queso");
   }
 }
