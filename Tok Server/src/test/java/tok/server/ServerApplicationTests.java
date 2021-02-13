@@ -1,4 +1,4 @@
-package tok;
+package tok.tests;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,8 +15,9 @@ class ServerApplicationTests {
 
 	@Test
 	void contextLoads() {
-		User myUser = repository.save(new User("ray", "[ass"));
-		assertThat(myUser.getUserName()).isEqualTo("ray");
+		// repository.deleteAll();
+		// User myUser = repository.save(new User("ray", "[ass"));
+		// assertThat(myUser.getUserName()).isEqualTo("ray");
 	}
 
 }

@@ -7,17 +7,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection="Users")
 public class User {
     @Id String id;
-    // NOTE - aqi el id puede ser el username
-    public String userName;
-    public int balance;
-    public String password;
-    String token;
+
+    String userName;
+    int balance;
+    String password;
   
     public User() {}
 
     public User(String userName, String password) {
       this.userName = userName;
       this.password = password;
+      this.balance = 0;
     }
 
     public void setPassword(String password){
@@ -43,11 +43,5 @@ public class User {
     }
     public String getId(){
         return id;
-    }
-    public String getToken(){
-        return token;
-    }
-    public void setToken(String token){
-        this.token = token;
     }
 }
