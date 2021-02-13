@@ -18,7 +18,7 @@ import tok.utils.Authorizer;
 
 
 @RestController
-class CryptoController {
+public class CryptoController {
     
     @Autowired
     Authorizer authorizer;
@@ -33,7 +33,7 @@ class CryptoController {
             users.get(0).addBalance(Integer.parseInt(data.getCrypto()));
             userRepository.save(users.get(0));
             return true;
-        }
+        } // TODO - lanzar una excepcion de no autorizado o algo similar
         return false;
     }
 
