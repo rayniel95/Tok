@@ -38,6 +38,7 @@ class AuthorizerTest{
         assertThat(authorizer.isAuthorized("roy", "pass")).isEqualTo(false);
     }
     // FIXME - por alguna razon da null pointer si lo muevo a una clase aparte
+    // parece algun problema con las inyecciones, no me esta quedando claro
     void createRayPseudoUser(){
         userRepository.deleteAll();
         userRepository.save(new User("ray", BCrypt.hashpw(
