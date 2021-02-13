@@ -13,24 +13,37 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import tok.repositories.UserRepository;
 import tok.models.User;
-import tok.models.AuthBody;
+import tok.models.CryptoRequest;
+import tok.utils.Authorizer;
 
 
-// @RestController
-// class CryptoController {
+@RestController
+class CryptoController {
     
-//     @Autowired
-//     UserRepository userRepository;
+    @Autowired
+    Authorizer authorizer;
+
+    @Autowired
+    UserRepository userRepository;
     
-//     @PostMapping("/login")
-//     String login(@RequestBody AuthBody data){
-//         List<User> newUser = userRepository.findByUserName(data.getUserName());
-//         if(newUser.size() > 0 && newUser.get(0).getPassword() == data.getPassword()){
-//             String token = UUID.randomUUID().toString();
-//             newUser.get(0).setToken(token);
-//             userRepository.save(newUser.get(0));
-//             return token;
-//         }
-//         return "";
-//     }
-// }
+    @PostMapping("/addCrypto")
+    Boolean addCrypto(@RequestBody CryptoRequest data){
+        if(authorizer.isAuthorized(data.getUserName(), data.getPassword())){
+            List<User> users = userRepository.findByUserName(data.getUserName());
+            users.get(0).addBalance(Integer.parseInt(data.getCrypto()));
+            userRepository.save(users.get(0));
+            return true;
+        }
+        return false;
+    }
+
+    @GetMapping("/verSaldo")
+    Integer verSaldo(@RequestBody CryptoRequest data){
+        if(authorizer.isAuthorized(data.getUserName(), data.getPassword())){
+            return userRepository
+            .findByUserName(data.getUserName())
+            .get(0).getBalance();
+        }
+        return -1;
+    }
+}
