@@ -211,6 +211,32 @@ class CryptoControllerTest {
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
+
+    @Test
+    void userIsAuthorizedToAddCryptoAddMoreCrypto() throws Exception {
+        // header
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_JSON);
+        header.set("userName", "ray");
+        header.set("password", "pass");
+        // entity without body
+        HttpEntity<String> entity = new HttpEntity<String>(
+            "{\"crypto\":\"20\"}", header
+        );
+
+        ResponseEntity<String> responseAddCrypto = testRestTemplate.exchange(
+            "/addCrypto", HttpMethod.POST, entity, String.class
+        );
+
+        ResponseEntity<String> responseVerSaldo = testRestTemplate.exchange(
+            "/verSaldo", HttpMethod.GET, new HttpEntity<Void>(header), 
+            String.class
+        );
+
+        assertThat(responseAddCrypto.getBody().toString()).isEqualTo("true");
+        assertThat(responseVerSaldo.getBody().toString()).isEqualTo("24");
+    }
+
     void createRayPseudoUser(){
         userRepository.deleteAll();
         userRepository.save(new User("ray", BCrypt.hashpw(
