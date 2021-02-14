@@ -1,5 +1,5 @@
 package tok.tests.controllers;
-
+// TODO - necesito algo para organizar esto
 import tok.repositories.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.RequestEntity;
+import tok.models.CryptoRequest;
+import org.springframework.http.HttpStatus;
+
 
 
 
@@ -41,29 +45,37 @@ class CryptoControllerTest {
     @Test
     void userIsAuthorizedToVerSaldo() throws Exception {
         createRayPseudoUser();
-        Map<String, String> body = Map.ofEntries(
-            entry("userName", "ray"),
-            entry("password", "pass"),
-            entry("crypto", "3")
-        );
-        
         // header
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_JSON);
-
-        // entity with body
-        HttpEntity<String> entity = new HttpEntity<String>("cosa", header);
+        header.set("userName", "ray");
+        header.set("password", "pass");
+        // entity without body
+        HttpEntity<Void> entity = new HttpEntity<Void>(header);
 
         ResponseEntity<String> response = testRestTemplate.exchange(
             "/verSaldo", HttpMethod.GET, entity, String.class
         );
 
-        assertThat(response.toString()).isEqualTo("-1");
+        assertThat(response.getBody().toString()).isEqualTo("0");
     }
 
     @Test
     void userIsNotAuthorizedToVerSaldo() throws Exception {
+        createRayPseudoUser();
+        // header
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_JSON);
+        header.set("userName", "ray");
+        header.set("password", "passs");
+        // entity without body
+        HttpEntity<Void> entity = new HttpEntity<Void>(header);
 
+        ResponseEntity<String> response = testRestTemplate.exchange(
+            "/verSaldo", HttpMethod.GET, entity, String.class
+        );
+
+        assertThat(response.getBody().toString()).isEqualTo("-1");
     }
 
     @Test
@@ -82,8 +94,25 @@ class CryptoControllerTest {
     }
 
     @Test
-    void badBodySentToVerSaldo() throws Exception {
+    void badHeadersSentToAddCrypto() throws Exception {
 
+    }
+
+    @Test
+    void badHeadersSentToVerSaldo() throws Exception {
+        createRayPseudoUser();
+        // header
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_JSON);
+        header.set("userName", "ray");
+        // entity without body
+        HttpEntity<Void> entity = new HttpEntity<Void>(header);
+
+        ResponseEntity<String> response = testRestTemplate.exchange(
+            "/verSaldo", HttpMethod.GET, entity, String.class
+        );
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
     void createRayPseudoUser(){
         userRepository.deleteAll();

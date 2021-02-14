@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import tok.repositories.UserRepository;
@@ -25,7 +26,8 @@ public class CryptoController {
 
     @Autowired
     UserRepository userRepository;
-    
+    // TODO - seria buena idea meter el username y la pass en los headers???
+    // y asi separar la crypto en el body????
     @PostMapping("/addCrypto")
     Boolean addCrypto(@RequestBody CryptoRequest data){
         if(authorizer.isAuthorized(data.getUserName(), data.getPassword())){
@@ -38,10 +40,13 @@ public class CryptoController {
     }
 
     @GetMapping("/verSaldo")
-    Integer verSaldo(@RequestBody CryptoRequest data){
-        if(authorizer.isAuthorized(data.getUserName(), data.getPassword())){
+    Integer verSaldo(
+        @RequestHeader(name="userName", required=true) String userName,
+        @RequestHeader(name="password", required=true) String password
+    ){
+        if(authorizer.isAuthorized(userName, password)){
             return userRepository
-            .findByUserName(data.getUserName())
+            .findByUserName(userName)
             .get(0).getBalance();
         }
         return -1;
