@@ -1,3 +1,5 @@
 # Tok
-## About:
-Simple Spring Boot application with Angular.
+
+## About
+
+Simple Spring Boot rest application with Angular.
