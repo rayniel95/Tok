@@ -26,16 +26,21 @@ public class CryptoController {
 
     @Autowired
     UserRepository userRepository;
-    // TODO - seria buena idea meter el username y la pass en los headers???
-    // y asi separar la crypto en el body????
+ 
     @PostMapping("/addCrypto")
-    Boolean addCrypto(@RequestBody CryptoRequest data){
-        if(authorizer.isAuthorized(data.getUserName(), data.getPassword())){
-            List<User> users = userRepository.findByUserName(data.getUserName());
-            users.get(0).addBalance(Integer.parseInt(data.getCrypto()));
+    Boolean addCrypto(
+        @RequestHeader(name="userName", required=true) String userName,
+        @RequestHeader(name="password", required=true) String password,
+        @RequestBody CryptoRequest crypto
+    ){
+        Integer money = Integer.parseInt(crypto.getCrypto());
+        if(authorizer.isAuthorized(userName, password) && money > 0){
+            List<User> users = userRepository.findByUserName(userName);
+            users.get(0).addBalance(money);
             userRepository.save(users.get(0));
             return true;
         } // TODO - lanzar una excepcion de no autorizado o algo similar
+        // customizar esto para que los mensajes no sean tipo rpc
         return false;
     }
 

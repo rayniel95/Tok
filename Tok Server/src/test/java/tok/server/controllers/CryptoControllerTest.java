@@ -24,7 +24,6 @@ import org.springframework.http.HttpStatus;
 
 
 
-
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 class CryptoControllerTest {
 
@@ -59,10 +58,10 @@ class CryptoControllerTest {
 
         assertThat(response.getBody().toString()).isEqualTo("0");
     }
-
+    // NOTE - tener presente que crea un contexto para toda la clase
+    // el orden de los test importa
     @Test
     void userIsNotAuthorizedToVerSaldo() throws Exception {
-        createRayPseudoUser();
         // header
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_JSON);
@@ -80,27 +79,125 @@ class CryptoControllerTest {
 
     @Test
     void userIsAuthorizedToAddCrypto() throws Exception {
+        // header
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_JSON);
+        header.set("userName", "ray");
+        header.set("password", "pass");
+        // entity without body
+        HttpEntity<String> entity = new HttpEntity<String>(
+            "{\"crypto\":\"4\"}", header
+        );
 
+        ResponseEntity<String> responseAddCrypto = testRestTemplate.exchange(
+            "/addCrypto", HttpMethod.POST, entity, String.class
+        );
+
+        ResponseEntity<String> responseVerSaldo = testRestTemplate.exchange(
+            "/verSaldo", HttpMethod.GET, new HttpEntity<Void>(header), 
+            String.class
+        );
+
+        assertThat(responseAddCrypto.getBody().toString()).isEqualTo("true");
+        assertThat(responseVerSaldo.getBody().toString()).isEqualTo("4");
     }
 
     @Test
     void userIsNotAuthorizedToAddCrypto() throws Exception {
+        // header
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_JSON);
+        header.set("userName", "ray");
+        header.set("password", "passs");
+        // entity without body
+        HttpEntity<String> entity = new HttpEntity<String>(
+            "{\"crypto\":\"4\"}", header
+        );
 
+        ResponseEntity<String> response = testRestTemplate.exchange(
+            "/addCrypto", HttpMethod.POST, entity, String.class
+        );
+
+        assertThat(response.getBody().toString()).isEqualTo("false");
     }
 
     @Test
-    void badBodySentToAddCrypto() throws Exception {
+    void userIsAuthorizedToAddCryptoAddNegativeFounds() throws Exception {
+        // header
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_JSON);
+        header.set("userName", "ray");
+        header.set("password", "pass");
+        // entity without body
+        HttpEntity<String> entity = new HttpEntity<String>(
+            "{\"crypto\":\"-5\"}", header
+        );
 
+        ResponseEntity<String> response = testRestTemplate.exchange(
+            "/addCrypto", HttpMethod.POST, entity, String.class
+        );
+
+        assertThat(response.getBody().toString()).isEqualTo("false");
+    }
+
+    @Test
+    void badBodySentToAddCryptoBadName() throws Exception {
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_JSON);
+        header.set("userName", "ray");
+        header.set("password", "pass");
+        // entity without body
+        HttpEntity<String> entity = new HttpEntity<String>(
+            "{\"cryptum\":\"4\"}", header
+        );
+
+        ResponseEntity<String> response = testRestTemplate.exchange(
+            "/addCrypto", HttpMethod.POST, entity, String.class
+        );
+
+        assertThat(response.getStatusCode())
+            .isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    void badBodySentToAddCryptoNoName() throws Exception {
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_JSON);
+        header.set("userName", "ray");
+        header.set("password", "pass");
+        // entity without body
+        HttpEntity<String> entity = new HttpEntity<String>(
+            "{}", header
+        );
+
+        ResponseEntity<String> response = testRestTemplate.exchange(
+            "/addCrypto", HttpMethod.POST, entity, String.class
+        );
+
+        assertThat(response.getStatusCode())
+            .isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Test
     void badHeadersSentToAddCrypto() throws Exception {
+        createRayPseudoUser();
+        // header
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_JSON);
+        header.set("password", "pass");
+        // entity without body
+        HttpEntity<String> entity = new HttpEntity<String>(
+            "{\"crypto\":\"4\"}", header
+        );
 
+        ResponseEntity<String> response = testRestTemplate.exchange(
+            "/addCrypto", HttpMethod.POST, entity, String.class
+        );
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
 
     @Test
     void badHeadersSentToVerSaldo() throws Exception {
-        createRayPseudoUser();
         // header
         HttpHeaders header = new HttpHeaders();
         header.setContentType(MediaType.APPLICATION_JSON);

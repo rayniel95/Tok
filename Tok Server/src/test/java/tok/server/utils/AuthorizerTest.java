@@ -28,13 +28,11 @@ class AuthorizerTest{
 
     @Test
     void isAuthorized() throws Exception{
-        createRayPseudoUser();
         assertThat(authorizer.isAuthorized("ray", "pass")).isEqualTo(true);
     }
 
     @Test
     void isNotAuthorizedBecauseUserName() throws Exception{
-        createRayPseudoUser();
         assertThat(authorizer.isAuthorized("roy", "pass")).isEqualTo(false);
     }
     // FIXME - por alguna razon da null pointer si lo muevo a una clase aparte
