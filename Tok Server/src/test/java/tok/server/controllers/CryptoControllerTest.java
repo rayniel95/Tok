@@ -211,7 +211,7 @@ class CryptoControllerTest {
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
-
+    
     @Test
     void userIsAuthorizedToAddCryptoAddMoreCrypto() throws Exception {
         // header

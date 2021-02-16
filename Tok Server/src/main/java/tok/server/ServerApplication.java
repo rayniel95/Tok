@@ -6,7 +6,8 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @SpringBootApplication
 public class ServerApplication {
-
+	// TODO - falta inicializar la bd, tener cuidado que no entre en conflicto
+	// con los test
 	public static void main(String[] args) {
 		SpringApplication.run(ServerApplication.class, args);
 	}
