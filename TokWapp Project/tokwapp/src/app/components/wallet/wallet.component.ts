@@ -15,10 +15,14 @@ import {Observable} from 'rxjs'
 export class WalletComponent implements OnInit {
   form: FormGroup;
   visibleForm: boolean
-
+  founds: any;
+  // NOTE - creo que esto es un antipattern, lo ideal seria tener dos
+  // componentes, uno para agregar y otro para ver, y que sean hijos de
+  // esta
   constructor(private userInfo: LogingInfoService, private formBuilder: 
     FormBuilder, private wallet: WalletService, private router: Router) {
 
+    this.founds = "cargando......"
     this.visibleForm = false;
     this.form = this.formBuilder.group(new Crypto(0))
   }
@@ -29,21 +33,20 @@ export class WalletComponent implements OnInit {
       return;
     }
     this.visibleForm = false
+    this.wallet.verSaldo().subscribe((data: number) => {this.founds = data})
   }
 
   addCrypto(crypto: Crypto){
     this.wallet.addCrypto(crypto.crypto).subscribe((res) => {
       this.visibleForm = false
-    })
+      this.wallet.verSaldo().subscribe((data: number) => {this.founds = data})
+    }) // NOTE - !!!!!a observable inside an observer, i dont like that
   }
 
   addMore(){
     this.visibleForm = true;
-  }
-  // NOTE - me pregunto si se actualizaria el saldo una vez que se halla
-  // agregado mas 
-  saldo(): Observable<number>{
-    return this.wallet.verSaldo()
+    console.log('se agrega')
   }
 
+// TODO - embellecer el nombre de las variables y los metodos
 }
