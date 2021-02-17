@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http'
+import {CommunicatorService} from 'src/app/services/communicator/communicator.service'
 import {url} from 'src/app/config'
 import { LogingInfoService } from '../loging-info/loging-info.service';
 import {Crypto} from 'src/app/models/crypto/crypto'
@@ -10,45 +10,16 @@ import {Crypto} from 'src/app/models/crypto/crypto'
 })
 export class WalletService {
 
-  constructor(private client: HttpClient, 
+  constructor(private communicator: CommunicatorService, 
     private userInfo: LogingInfoService) { }
 
   verSaldo(): number {
-    let cantity = -1
-    this.client.get<string>(
-      url + '/verSaldo', 
-      {
-        headers: {
-          'Content-Type': 'application/json', 
-          'userName': this.userInfo.getUser().getUserName(),
-          'password': this.userInfo.getUser().getPassword()
-        }
-      }
-    ).subscribe(
-      data => {
-        cantity = Number(data);
-      }
-    )
-    return cantity;
+    return this.communicator.verSaldo(this.userInfo.getUser().getUserName(),
+      this.userInfo.getUser().getPassword())
   }
   addCrypto(crypto: number): boolean{
-    let added = false;
-    this.client.post<boolean>(
-      url + '/addCrypto',
-      new Crypto(crypto),
-      {
-        headers: {
-          'Content-Type': 'application/json', 
-          'userName': this.userInfo.getUser().getUserName(),
-          'password': this.userInfo.getUser().getPassword()
-        } 
-      }
-    ).subscribe(
-      data => {
-        added = data
-      }
-    )
-    return added;
+    return this.communicator.addCrypto(this.userInfo.getUser().getUserName(),
+      this.userInfo.getUser().getPassword(), crypto)  
   }
 }
 // NOTE - no me queda claro pq no se usa async

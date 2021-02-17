@@ -1,9 +1,15 @@
 <div>
-    <div>
-        <!--aqui iria lo de visualizar el saldo-->
+    <div [hidden]="visibleForm">
+        <p>
+            {{saldo()}}
+        </p>
+        <button (onClick)="addMore()">
+            add
+        </button>
     </div>
-    <div>
-        <form [formGroup]="form">
+
+    <div [hidden]="!visibleForm">
+        <form [formGroup]="form" (ngSubmit)="addCrypto(form.value)">
             <div>
                 <label for="crypto">Cantity to add</label>
                 <input id="crypto" formControlName="crypto">
@@ -13,4 +19,5 @@
             </button>
         </form>
     </div>
+
 </div>

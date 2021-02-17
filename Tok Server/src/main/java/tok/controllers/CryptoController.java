@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.beans.factory.annotation.Autowired;
 import tok.repositories.UserRepository;
 import tok.models.User;
@@ -19,6 +20,7 @@ import tok.utils.Authorizer;
 
 
 @RestController
+@CrossOrigin(origins="*")
 public class CryptoController {
     
     @Autowired
