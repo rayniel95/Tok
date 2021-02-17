@@ -4,6 +4,8 @@ import {FormBuilder, FormGroup} from '@angular/forms'
 import {Crypto} from 'src/app/models/crypto/crypto'
 import {WalletService} from 'src/app/services/wallet/wallet.service'
 import {Router} from '@angular/router'
+import {Observable} from 'rxjs'
+
 
 @Component({
   selector: 'app-wallet',
@@ -23,15 +25,16 @@ export class WalletComponent implements OnInit {
 
   ngOnInit(): void {
     if(!this.userInfo.isAuthenticated()){
-      this.router.navigateByUrl('/login')
+      this.router.navigateByUrl('/loging')
       return;
     }
     this.visibleForm = false
   }
 
   addCrypto(crypto: Crypto){
-    this.wallet.addCrypto(crypto.crypto)
-    this.visibleForm = false
+    this.wallet.addCrypto(crypto.crypto).subscribe((res) => {
+      this.visibleForm = false
+    })
   }
 
   addMore(){
@@ -39,8 +42,8 @@ export class WalletComponent implements OnInit {
   }
   // NOTE - me pregunto si se actualizaria el saldo una vez que se halla
   // agregado mas 
-  saldo(){
-    this.wallet.verSaldo()
+  saldo(): Observable<number>{
+    return this.wallet.verSaldo()
   }
 
 }

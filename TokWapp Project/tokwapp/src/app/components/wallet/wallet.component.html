@@ -1,7 +1,7 @@
 <div>
     <div [hidden]="visibleForm">
         <p>
-            {{saldo()}}
+            {{saldo() | async}}
         </p>
         <button (onClick)="addMore()">
             add

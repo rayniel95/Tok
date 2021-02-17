@@ -28,16 +28,16 @@ export class LogingComponent implements OnInit {
   }
   // TODO - esto deberia hacerlo un servicio
   logingUser(userInfo: User){
-    console.log(userInfo)
-    if(this.authService.authenticateUser(
-      userInfo.userName, userInfo.password)){
-
-      this.userInfo.setUser(userInfo)
-      this.userInfo.authenticate(true)
-      this.router.navigateByUrl('/wallet')
-      return
-    }
-    // TODO - usuario o contrasena mal, sacar algun cartel en la pagina
-    console.log('bad username o password')
+    this.authService.authenticateUser(userInfo.userName, userInfo.password)
+    .subscribe(res => {
+      if(res){
+        this.userInfo.setUser(new User(userInfo.userName, userInfo.password))
+        this.userInfo.authenticate(true)
+        this.router.navigateByUrl('/wallet')
+        return
+      }
+      console.log('bad username o password')
+    })
   }
 }
+    // TODO - usuario o contrasena mal, sacar algun cartel en la pagina

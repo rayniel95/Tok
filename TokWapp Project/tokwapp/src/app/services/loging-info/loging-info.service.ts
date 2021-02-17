@@ -7,6 +7,7 @@ import {User} from "src/app/models/user/user"
 export class LogingInfoService {
   user: User;
   authenticated: boolean;
+  
   constructor() { 
     this.user = new User('', '');
     this.authenticated = false
@@ -20,7 +21,7 @@ export class LogingInfoService {
   isAuthenticated(): boolean{
     return this.authenticated
   }
-  authenticate(isAuthenticated: boolean): void{
+  authenticate(isAuthenticated: boolean): void {
     this.authenticated = isAuthenticated
   }
 }
