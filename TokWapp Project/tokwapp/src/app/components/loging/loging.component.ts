@@ -13,12 +13,13 @@ import {Router} from '@angular/router'
 })
 export class LogingComponent implements OnInit {
   form: FormGroup;
-  
+  wrongUserOrPassword: boolean
   constructor(private formBuilder: FormBuilder, 
     private userInfo: LogingInfoService, private authService: AuthService,
       private router: Router) { 
     
     this.form = this.formBuilder.group(new User('', ''))
+    this.wrongUserOrPassword = false
   }
 
   ngOnInit(): void {
@@ -36,8 +37,8 @@ export class LogingComponent implements OnInit {
         this.router.navigateByUrl('/wallet')
         return
       }
+      this.wrongUserOrPassword = true
       console.log('bad username o password')
     })
   }
 }
-    // TODO - usuario o contrasena mal, sacar algun cartel en la pagina

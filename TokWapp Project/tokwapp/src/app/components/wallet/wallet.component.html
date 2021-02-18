@@ -6,18 +6,19 @@
         <p>
             {{founds}}
         </p>
-        <button (click)="addMore()">
+        <button class="btn btn-primary" (click)="addMore()">
             add
         </button>
     </div>
 
     <div [hidden]="!visibleForm">
         <form [formGroup]="form" (ngSubmit)="addCrypto(form.value)">
-            <div>
+            <div class="form-group">
                 <label for="crypto">Cantity to add</label>
-                <input id="crypto" formControlName="crypto">
+                <input id="crypto" class="form-control" 
+                    formControlName="crypto">
             </div>
-            <button type="submit">
+            <button class="btn btn-primary" type="submit">
                 addCrypto
             </button>
         </form>

@@ -1,18 +1,22 @@
 <div>
     <form [formGroup]="form" (ngSubmit)="logingUser(form.value)">
 
-        <div>
+        <div class="form-group">
             <label for="userNameInput">Username</label>
-            <input id="userNameInput" formControlName="userName">
+            <input id="userNameInput"class="form-control" 
+                formControlName="userName">
         </div>
-        <div>
+        <div class="form-group">
             <label for="passwordInput">Password</label>
-            <input id="passwordInput" formControlName="password">
+            <input id="passwordInput" class="form-control"  
+                formControlName="password">
         </div>
         
-        <button type="submit">
+        <button class="btn btn-primary" type="submit">
             Loging
         </button>
 
     </form>
 </div>
+<ngb-alert #staticAlert type="danger" *ngIf="wrongUserOrPassword" 
+    (closed)="wrongUserOrPassword = false">Wrong user or password</ngb-alert>

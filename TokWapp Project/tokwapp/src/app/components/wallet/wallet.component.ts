@@ -46,6 +46,5 @@ export class WalletComponent implements OnInit {
     this.visibleForm = true;
     console.log('se agrega')
   }
-// TODO - i should add css
 // TODO - embellecer el nombre de las variables y los metodos
 }
