@@ -4,7 +4,6 @@ import {FormBuilder, FormGroup} from '@angular/forms'
 import {Crypto} from 'src/app/models/crypto/crypto'
 import {WalletService} from 'src/app/services/wallet/wallet.service'
 import {Router} from '@angular/router'
-import {Observable} from 'rxjs'
 
 
 @Component({
@@ -40,8 +39,8 @@ export class WalletComponent implements OnInit {
     this.wallet.addCrypto(crypto.crypto).subscribe((res) => {
       this.visibleForm = false
       this.wallet.verSaldo().subscribe((data: number) => {this.founds = data})
-    }) // NOTE - !!!!!a observable inside an observer, i dont like that
-  }
+    }) // NOTE - !!!!!a observable inside an observer, i dont like that creo
+  } // que es el resultado de que deberia ser hijo de esta componente
 
   addMore(){
     this.visibleForm = true;
