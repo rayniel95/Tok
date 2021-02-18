@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LogingInfoService } from 'src/app/services/loging-info/loging-info.service';
-import {FormBuilder, FormGroup} from '@angular/forms'
-import {Crypto} from 'src/app/models/crypto/crypto'
 import {WalletService} from 'src/app/services/wallet/wallet.service'
 import {Router} from '@angular/router'
 
@@ -12,7 +10,6 @@ import {Router} from '@angular/router'
   styleUrls: ['./wallet.component.css']
 })
 export class WalletComponent implements OnInit {
-  form: FormGroup;
   visibleForm: boolean
   founds: any;
   // NOTE - creo que esto es un antipattern, lo ideal seria tener dos
@@ -23,7 +20,6 @@ export class WalletComponent implements OnInit {
 
     this.founds = "cargando......"
     this.visibleForm = false;
-    this.form = this.formBuilder.group(new Crypto(0))
   }
 
   ngOnInit(): void {

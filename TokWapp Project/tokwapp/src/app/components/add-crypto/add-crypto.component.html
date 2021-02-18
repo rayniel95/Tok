@@ -1,0 +1,12 @@
+<div>
+    <form [formGroup]="form" (ngSubmit)="add(form.value)">
+        <div class="form-group">
+            <label for="crypto">Cantity to add</label>
+            <input id="crypto" class="form-control" 
+                formControlName="crypto">
+        </div>
+        <button class="btn btn-primary" type="submit">
+            add
+        </button>
+    </form>
+</div>

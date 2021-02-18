@@ -1,27 +1,10 @@
 <div>
     <div [hidden]="visibleForm">
-        <p>
-            Saldo:
-        </p>
-        <p>
-            {{founds}}
-        </p>
-        <button class="btn btn-primary" (click)="addMore()">
-            add
-        </button>
+  
     </div>
 
     <div [hidden]="!visibleForm">
-        <form [formGroup]="form" (ngSubmit)="addCrypto(form.value)">
-            <div class="form-group">
-                <label for="crypto">Cantity to add</label>
-                <input id="crypto" class="form-control" 
-                    formControlName="crypto">
-            </div>
-            <button class="btn btn-primary" type="submit">
-                addCrypto
-            </button>
-        </form>
+ 
     </div>
 
 </div>
