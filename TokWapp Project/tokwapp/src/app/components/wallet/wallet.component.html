@@ -1,10 +1,11 @@
 <div>
     <div [hidden]="visibleForm">
-  
+        <app-consult-founds [toUpdate]="updateFoundsComp" 
+        (foundsForAdd)="hideFoundsAndShowForm()"></app-consult-founds>
     </div>
 
     <div [hidden]="!visibleForm">
- 
+        <app-add-crypto (addedFoundsCorrectly)="hideFormAndShowFounds($event)"></app-add-crypto>
     </div>
 
 </div>

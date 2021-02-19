@@ -11,14 +11,11 @@ import {Router} from '@angular/router'
 })
 export class WalletComponent implements OnInit {
   visibleForm: boolean
-  founds: any;
-  // NOTE - creo que esto es un antipattern, lo ideal seria tener dos
-  // componentes, uno para agregar y otro para ver, y que sean hijos de
-  // esta
-  constructor(private userInfo: LogingInfoService, private formBuilder: 
-    FormBuilder, private wallet: WalletService, private router: Router) {
-
-    this.founds = "cargando......"
+  updateFoundsComp: boolean
+  constructor(private userInfo: LogingInfoService, 
+    private wallet: WalletService, private router: Router) {
+    
+    this.updateFoundsComp = false;  
     this.visibleForm = false;
   }
 
@@ -28,19 +25,18 @@ export class WalletComponent implements OnInit {
       return;
     }
     this.visibleForm = false
-    this.wallet.verSaldo().subscribe((data: number) => {this.founds = data})
   }
 
-  addCrypto(crypto: Crypto){
-    this.wallet.addCrypto(crypto.crypto).subscribe((res) => {
-      this.visibleForm = false
-      this.wallet.verSaldo().subscribe((data: number) => {this.founds = data})
-    }) // NOTE - !!!!!a observable inside an observer, i dont like that creo
-  } // que es el resultado de que deberia ser hijo de esta componente
-
-  addMore(){
-    this.visibleForm = true;
-    console.log('se agrega')
+  hideFoundsAndShowForm(){
+    this.visibleForm = true
   }
+
+  hideFormAndShowFounds(value: boolean){
+    if(value){
+      this.visibleForm = false;
+      this.updateFoundsComp = !this.updateFoundsComp
+    }
+  }
+  
 // TODO - embellecer el nombre de las variables y los metodos
 }
