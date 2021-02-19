@@ -24,6 +24,7 @@ export class ConsultFoundsComponent implements OnInit, OnChanges {
       } 
     )
   }
+  
   addFounds(){
     this.foundsForAdd.emit(true)
   }
@@ -34,6 +35,5 @@ export class ConsultFoundsComponent implements OnInit, OnChanges {
         this.founds = data
       } 
     )
-    
   }
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LogingInfoService } from 'src/app/services/loging-info/loging-info.service';
-import {WalletService} from 'src/app/services/wallet/wallet.service'
 import {Router} from '@angular/router'
 
 
@@ -12,8 +11,7 @@ import {Router} from '@angular/router'
 export class WalletComponent implements OnInit {
   visibleForm: boolean
   updateFoundsComp: boolean
-  constructor(private userInfo: LogingInfoService, 
-    private wallet: WalletService, private router: Router) {
+  constructor(private userInfo: LogingInfoService, private router: Router) {
     
     this.updateFoundsComp = false;  
     this.visibleForm = false;
@@ -37,6 +35,4 @@ export class WalletComponent implements OnInit {
       this.updateFoundsComp = !this.updateFoundsComp
     }
   }
-  
-// TODO - embellecer el nombre de las variables y los metodos
 }
