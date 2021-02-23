@@ -39,8 +39,8 @@ public class CryptoController {
         @RequestHeader(name="password", required=true) String password,
         @RequestBody CryptoRequest crypto
     ){
-        int money = crypto.getCrypto();
-        int wallet =  crypto.getWallet();
+        int money = crypto.crypto;
+        int wallet = crypto.wallet;
         if(
             authorizer.isAuthorized(userName, password) && money > 0 
             && wallet < userRepository.findByUserName(userName)
@@ -60,14 +60,19 @@ public class CryptoController {
         @RequestHeader(name="userName", required=true) String userName,
         @RequestHeader(name="password", required=true) String password,
         @RequestBody CryptoRequest crypto
-    ){
+    ){ // TODO - solve this
+        System.out.println(crypto.wallet);
+        System.out.println(userRepository.findByUserName(userName)
+        .get(0).getWalletSize());
+        int money = crypto.crypto;
+        int wallet = crypto.wallet;
         if(authorizer.isAuthorized(userName, password) 
-            && crypto.getWallet() < userRepository.findByUserName(userName)
+            && wallet < userRepository.findByUserName(userName)
             .get(0).getWalletSize()
         ){
             return userRepository
             .findByUserName(userName)
-            .get(0).getBalanceWallet(crypto.getWallet());
+            .get(0).getBalanceWallet(wallet);
         }
         return -1;
     }

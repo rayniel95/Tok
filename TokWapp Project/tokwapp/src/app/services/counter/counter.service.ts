@@ -15,7 +15,7 @@ export class CounterService {
 
   countWallets(){
     return this.communicator.walletCount(
-      this.userInfo.user.getUserName(), this.userInfo.user.getPassword()
+      this.userInfo.getUser().getUserName(), this.userInfo.getUser().getPassword()
     )
   }
 

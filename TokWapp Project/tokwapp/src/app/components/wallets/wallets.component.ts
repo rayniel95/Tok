@@ -19,10 +19,10 @@ export class WalletsComponent implements OnInit {
     private counter: CounterService, private router: Router,
     private creator: CreatorService
   ) { 
-    this.wallets = range
+    this.wallets = []
     this.maxNumberOfWalletOrError = false
   }
-
+  // TODO - si no estas autenticado volver al loging
   ngOnInit(): void {
     this.counter.countWallets().subscribe(data =>{
       this.wallets = range(data)

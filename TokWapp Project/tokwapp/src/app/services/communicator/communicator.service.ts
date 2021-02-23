@@ -29,12 +29,13 @@ export class CommunicatorService {
       "GET",
       url + '/verSaldo', 
       {
+        body: {wallet: 0, crypto: 0},
         headers: {
           'Content-Type': 'application/json', 
           'userName': userName,
           'password': password,
         },
-        body: new Crypto(wallet, 0)
+        responseType: "json"
       }
     ).pipe(map(res=>{
       return Number(res)
@@ -73,8 +74,9 @@ export class CommunicatorService {
     }))
   }
   createWallet(userName: string, password: string){
+    if(userName){console.log("algo")}
     return this.client.post<boolean>(
-      url + '/createWallet',
+      url + '/createWallet', {},
       {
         headers: {
           'Content-Type': 'application/json', 

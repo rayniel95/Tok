@@ -28,7 +28,7 @@ export class LogingComponent implements OnInit {
     }
   }
   // TODO - esto deberia hacerlo un servicio
-  logingUser(userInfo: User){
+  logingUser(userInfo: {userName: string, password: string}){
     this.authService.authenticateUser(userInfo.userName, userInfo.password)
     .subscribe(res => {
       if(res){
