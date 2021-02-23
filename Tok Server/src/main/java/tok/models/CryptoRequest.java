@@ -2,13 +2,19 @@ package tok.models;
 
 
 public class CryptoRequest {
-    String crypto;
+    int crypto;
+    int wallet;
 
-    public String getCrypto(){
+    public int getCrypto(){
         return crypto;
     }
-
-    public void setCrypto(String crypto){
+    public int getWallet(){
+        return wallet;
+    }
+    public void setWallet(int wallet){
+        wallet = wallet;
+    }
+    public void setCrypto(int crypto){
         this.crypto=crypto;
     }
 }

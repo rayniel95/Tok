@@ -2,6 +2,10 @@ package tok.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import java.lang.IndexOutOfBoundsException;
+import java.util.List;
+import java.util.ArrayList;
+
 
 
 @Document(collection="Users")
@@ -9,15 +13,15 @@ public class User {
     @Id String id;
 
     String userName;
-    int balance;
     String password;
-  
+    List<Integer> wallets;
+    
     public User() {}
 
     public User(String userName, String password) {
       this.userName = userName;
       this.password = password;
-      this.balance = 0;
+      this.wallets = new ArrayList<Integer>();
     }
 
     public void setPassword(String password){
@@ -32,14 +36,31 @@ public class User {
     public String getUserName(){
         return userName;
     }
-    public int getBalance(){
-        return balance;
+    public int getBalanceWallet(int wallet){
+        if(wallet < getWalletSize()){
+            return this.wallets.get(wallet);
+        }
+        throw new IndexOutOfBoundsException();
     }
-    public void addBalance(int cantity){
-        this.balance += cantity;
+    public void addBalance(int wallet, int cantity){
+        if(wallet < getWalletSize()){
+            this.wallets.set(wallet, this.wallets.get(wallet) + cantity);
+            return;
+        }
+        throw new IndexOutOfBoundsException();
     }
-    public void setBalance(int balance){
-        this.balance = balance;
+    public void setBalance(int wallet, int balance){
+        if(wallet < getWalletSize()){
+            this.wallets.set(wallet, balance);
+            return;
+        }
+        throw new IndexOutOfBoundsException();
+    }
+    public int getWalletSize() {
+        return this.wallets.size();
+    }
+    public void createWallet(){
+        wallets.add(0);
     }
     public String getId(){
         return id;

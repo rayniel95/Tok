@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import tok.repositories.UserRepository;
 import tok.models.User;
 import tok.models.CryptoRequest;
@@ -28,6 +29,9 @@ public class CryptoController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Value("${custom.properties.maxwalletscantity}")
+    int maxWallets;
  
     @PostMapping("/addCrypto")
     Boolean addCrypto(
@@ -35,10 +39,15 @@ public class CryptoController {
         @RequestHeader(name="password", required=true) String password,
         @RequestBody CryptoRequest crypto
     ){
-        Integer money = Integer.parseInt(crypto.getCrypto());
-        if(authorizer.isAuthorized(userName, password) && money > 0){
+        int money = crypto.getCrypto();
+        int wallet =  crypto.getWallet();
+        if(
+            authorizer.isAuthorized(userName, password) && money > 0 
+            && wallet < userRepository.findByUserName(userName)
+            .get(0).getWalletSize()
+        ){
             List<User> users = userRepository.findByUserName(userName);
-            users.get(0).addBalance(money);
+            users.get(0).addBalance(wallet, money);
             userRepository.save(users.get(0));
             return true;
         } // TODO - lanzar una excepcion de no autorizado o algo similar
@@ -49,12 +58,48 @@ public class CryptoController {
     @GetMapping("/verSaldo")
     Integer verSaldo(
         @RequestHeader(name="userName", required=true) String userName,
+        @RequestHeader(name="password", required=true) String password,
+        @RequestBody CryptoRequest crypto
+    ){
+        if(authorizer.isAuthorized(userName, password) 
+            && crypto.getWallet() < userRepository.findByUserName(userName)
+            .get(0).getWalletSize()
+        ){
+            return userRepository
+            .findByUserName(userName)
+            .get(0).getBalanceWallet(crypto.getWallet());
+        }
+        return -1;
+    }
+
+    @PostMapping("/createWallet")
+    Boolean createWallet(
+        @RequestHeader(name="userName", required=true) String userName,
+        @RequestHeader(name="password", required=true) String password
+    ){
+        if(
+            authorizer.isAuthorized(userName, password)
+            && userRepository.findByUserName(userName)
+            .get(0).getWalletSize() + 1 <= maxWallets
+        ){ 
+            List<User> users = userRepository.findByUserName(userName);
+            users.get(0).createWallet();
+            userRepository.save(users.get(0));
+            return true;
+        } // TODO - lanzar una excepcion de no autorizado o algo similar
+        // customizar esto para que los mensajes no sean tipo rpc
+        return false;
+    }
+    
+    @GetMapping("/numberOfWallets")
+    Integer numberOfWallets(
+        @RequestHeader(name="userName", required=true) String userName,
         @RequestHeader(name="password", required=true) String password
     ){
         if(authorizer.isAuthorized(userName, password)){
             return userRepository
             .findByUserName(userName)
-            .get(0).getBalance();
+            .get(0).getWalletSize();
         }
         return -1;
     }
