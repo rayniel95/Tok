@@ -24,7 +24,7 @@ export class LogingComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.userInfo.isAuthenticated()){
-      this.router.navigateByUrl('/wallet')
+      this.router.navigateByUrl('/wallets')
     }
   }
   // TODO - esto deberia hacerlo un servicio
@@ -34,7 +34,7 @@ export class LogingComponent implements OnInit {
       if(res){
         this.userInfo.setUser(new User(userInfo.userName, userInfo.password))
         this.userInfo.authenticate(true)
-        this.router.navigateByUrl('/wallet')
+        this.router.navigateByUrl('/wallets')
         return
       }
       this.wrongUserOrPassword = true

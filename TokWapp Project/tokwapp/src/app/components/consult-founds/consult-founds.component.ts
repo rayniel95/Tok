@@ -2,6 +2,7 @@ import { Component, OnInit, Output, Input, EventEmitter, OnChanges, SimpleChange
 import { ConsulterService } from 'src/app/services/consulter/consulter.service';
 
 
+
 @Component({
   selector: 'app-consult-founds',
   templateUrl: './consult-founds.component.html',
@@ -9,31 +10,36 @@ import { ConsulterService } from 'src/app/services/consulter/consulter.service';
 })
 export class ConsultFoundsComponent implements OnInit, OnChanges {
   founds: any
-  @Output() foundsForAdd: EventEmitter<boolean>
+  @Output() foundsForAdd: EventEmitter<number>
   @Input() toUpdate: boolean
-  constructor(private consulter: ConsulterService) { 
+  @Input() walletNumber: number
+
+  constructor(
+    private consulter: ConsulterService,
+  ) { 
     this.founds = 'loading.......'
-    this.foundsForAdd = new EventEmitter<boolean>()
+    this.foundsForAdd = new EventEmitter<number>()
     this.toUpdate = false
+    this.walletNumber = 0
   }
 
   ngOnInit(): void {
-    this.consulter.consultFounds().subscribe(
-      data => {
-        this.founds = data
-      } 
-    )
+    this.requestParameter()
   }
   
   addFounds(){
-    this.foundsForAdd.emit(true)
+    this.foundsForAdd.emit(this.walletNumber)
   }
 
   ngOnChanges(change: SimpleChanges){
-    this.consulter.consultFounds().subscribe(
+    this.requestParameter()
+  }
+
+  requestParameter(){
+    this.consulter.consultFounds(this.walletNumber).subscribe(
       data => {
         this.founds = data
-      } 
-    )
+      }
+    )   
   }
 }

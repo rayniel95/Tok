@@ -24,9 +24,43 @@ export class CommunicatorService {
   // en cuanto a performance ya que el ultimo observable del stack y asi 
   // sucesivamente se estaran ejecutando, el subject sera una cache de las
   // respuestas de cada observable.
-  verSaldo(userName: string, password: string): Observable<number> {
-    return this.client.get<string>(
+  verSaldo(userName: string, password: string, wallet: number): Observable<number> {
+    return this.client.request(
+      "GET",
       url + '/verSaldo', 
+      {
+        headers: {
+          'Content-Type': 'application/json', 
+          'userName': userName,
+          'password': password,
+        },
+        body: new Crypto(wallet, 0)
+      }
+    ).pipe(map(res=>{
+      return Number(res)
+    }))
+  }
+
+  addCrypto(userName: string, password: string, wallet:number, crypto: number): Observable<boolean>{
+    return this.client.post<boolean>(
+      url + '/addCrypto',
+      new Crypto(wallet, crypto),
+      {
+        headers: {
+          'Content-Type': 'application/json', 
+          'userName': userName,
+          'password': password
+        } 
+      }
+    ).pipe(map(res => {
+        return Boolean(res)
+    }))
+  }
+
+  walletCount(userName: string, password: string){
+    return this.client.request(
+      "GET",
+      url + '/numberOfWallets', 
       {
         headers: {
           'Content-Type': 'application/json', 
@@ -38,10 +72,9 @@ export class CommunicatorService {
       return Number(res)
     }))
   }
-  addCrypto(userName: string, password: string, crypto: number): Observable<boolean>{
+  createWallet(userName: string, password: string){
     return this.client.post<boolean>(
-      url + '/addCrypto',
-      new Crypto(crypto),
+      url + '/createWallet',
       {
         headers: {
           'Content-Type': 'application/json', 

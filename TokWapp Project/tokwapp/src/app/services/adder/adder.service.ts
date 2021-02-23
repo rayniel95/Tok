@@ -13,9 +13,9 @@ export class AdderService {
     private communicator: CommunicatorService) { 
   }
 
-  addFounds(crypto: number): Observable<boolean>{
+  addFounds(wallet: number, crypto: number): Observable<boolean>{
     return this.communicator.addCrypto(this.userInfo.getUser().getUserName(),
-      this.userInfo.getUser().getPassword(), crypto)  
+      this.userInfo.getUser().getPassword(), wallet, crypto)  
   }
 
 }

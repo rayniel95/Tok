@@ -1,0 +1,17 @@
+<div>
+    <div>
+        <ol>
+            <li *ngFor="let wallet of wallets, index as walletId">
+                <app-consult-founds [walletNumber]="walletId" 
+                (foundsForAdd)="addFoundToWallet($event)"></app-consult-founds>
+            </li>
+        </ol>
+    </div>
+    <button (click)="createNewWallet()">
+        Create wallet
+    </button>
+</div>
+<div>
+    <ngb-alert #staticAlert type="danger" *ngIf="maxNumberOfWalletOrError" 
+    (closed)="maxNumberOfWalletOrError = false">Maximum number of wallets reached or error</ngb-alert>
+</div>

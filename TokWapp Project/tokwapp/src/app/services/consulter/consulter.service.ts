@@ -12,8 +12,8 @@ export class ConsulterService {
   constructor(private communicator: CommunicatorService, 
     private userInfo: LogingInfoService) { }
 
-  consultFounds(): Observable<number> {
+  consultFounds(wallet: number): Observable<number> {
     return this.communicator.verSaldo(this.userInfo.getUser().getUserName(),
-      this.userInfo.getUser().getPassword())
+      this.userInfo.getUser().getPassword(), wallet)
   }
 }

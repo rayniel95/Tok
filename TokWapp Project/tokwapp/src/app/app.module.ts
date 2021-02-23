@@ -8,7 +8,8 @@ import { WalletComponent } from './components/wallet/wallet.component';
 import{HttpClientModule} from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddCryptoComponent } from './components/add-crypto/add-crypto.component';
-import { ConsultFoundsComponent } from './components/consult-founds/consult-founds.component'
+import { ConsultFoundsComponent } from './components/consult-founds/consult-founds.component';
+import { WalletsComponent } from './components/wallets/wallets.component'
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { ConsultFoundsComponent } from './components/consult-founds/consult-foun
     LogingComponent,
     WalletComponent,
     AddCryptoComponent,
-    ConsultFoundsComponent
+    ConsultFoundsComponent,
+    WalletsComponent
   ],
   imports: [
     BrowserModule,

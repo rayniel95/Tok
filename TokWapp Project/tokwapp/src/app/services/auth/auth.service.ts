@@ -11,7 +11,7 @@ export class AuthService {
   constructor(private communicator: CommunicatorService) { }
 
   authenticateUser(userName: string, password: string): Observable<boolean> {
-    return this.communicator.verSaldo(userName, password).pipe(
+    return this.communicator.walletCount(userName, password).pipe(
       map(num => {
         if(num >= 0){return true}
         return false
