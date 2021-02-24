@@ -2,8 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms'
 import {Crypto} from 'src/app/models/crypto/crypto'
 import {AdderService} from 'src/app/services/adder/adder.service'
-import {EventEmitter, Output} from '@angular/core'
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -15,19 +14,17 @@ export class AddCryptoComponent implements OnInit {
   
   walletNumber: number;
   form: FormGroup;
-  @Output() addedFoundsCorrectly: EventEmitter<boolean>
   
   constructor(
     private formBuilder: FormBuilder, private adder: AdderService,
-    private router: ActivatedRoute
+    private activeRouter: ActivatedRoute, private router: Router
   ) {
     this.walletNumber = 0
-    this.form = this.formBuilder.group(new Crypto(this.walletNumber, 0))
-    this.addedFoundsCorrectly = new EventEmitter<boolean>()
+    this.form = this.formBuilder.group(new Crypto(0))
    }
 
   ngOnInit(): void {
-    this.router.paramMap.subscribe(
+    this.activeRouter.paramMap.subscribe(
       data=>{
         this.walletNumber = Number(data.get("walletId"))
       }
@@ -37,11 +34,7 @@ export class AddCryptoComponent implements OnInit {
   add(crypto: {crypto: number}): void {
     this.adder.addFounds(this.walletNumber, crypto.crypto).subscribe(
       data => {
-        if(data) {
-          this.addedFoundsCorrectly.emit(true)
-          return
-        }
-        this.addedFoundsCorrectly.emit(false)
+          this.router.navigateByUrl('/wallets')
       }
     )
   }

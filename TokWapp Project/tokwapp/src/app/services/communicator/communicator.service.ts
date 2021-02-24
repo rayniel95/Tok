@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http'
+import {HttpClient, HttpRequest, HttpHeaders} from '@angular/common/http'
 import {url} from 'src/app/config'
 import {Crypto} from 'src/app/models/crypto/crypto'
 import {Observable} from 'rxjs'
@@ -25,17 +25,17 @@ export class CommunicatorService {
   // sucesivamente se estaran ejecutando, el subject sera una cache de las
   // respuestas de cada observable.
   verSaldo(userName: string, password: string, wallet: number): Observable<number> {
-    return this.client.request(
-      "GET",
-      url + '/verSaldo', 
+    return this.client.get<number>(
+      url + '/wallets',
       {
-        body: {wallet: 0, crypto: 0},
         headers: {
           'Content-Type': 'application/json', 
           'userName': userName,
           'password': password,
         },
-        responseType: "json"
+        params: {
+          'walletId': wallet.toString()
+        }
       }
     ).pipe(map(res=>{
       return Number(res)
@@ -43,15 +43,18 @@ export class CommunicatorService {
   }
 
   addCrypto(userName: string, password: string, wallet:number, crypto: number): Observable<boolean>{
-    return this.client.post<boolean>(
-      url + '/addCrypto',
-      new Crypto(wallet, crypto),
+    return this.client.put<boolean>(
+      url + '/wallets',
+      new Crypto(crypto),
       {
         headers: {
           'Content-Type': 'application/json', 
           'userName': userName,
           'password': password
-        } 
+        }, 
+        params: {
+          'walletId': wallet.toString()
+        }
       }
     ).pipe(map(res => {
         return Boolean(res)
@@ -76,7 +79,7 @@ export class CommunicatorService {
   createWallet(userName: string, password: string){
     if(userName){console.log("algo")}
     return this.client.post<boolean>(
-      url + '/createWallet', {},
+      url + '/wallets', {},
       {
         headers: {
           'Content-Type': 'application/json', 

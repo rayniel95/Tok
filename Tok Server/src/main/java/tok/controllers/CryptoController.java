@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,51 +34,47 @@ public class CryptoController {
     @Value("${custom.properties.maxwalletscantity}")
     int maxWallets;
  
-    @PostMapping("/addCrypto")
+    @PutMapping("/wallets")
     Boolean addCrypto(
+        @RequestParam(name="walletId", required=true) int walletId,
         @RequestHeader(name="userName", required=true) String userName,
         @RequestHeader(name="password", required=true) String password,
         @RequestBody CryptoRequest crypto
     ){
         int money = crypto.crypto;
-        int wallet = crypto.wallet;
         if(
             authorizer.isAuthorized(userName, password) && money > 0 
-            && wallet < userRepository.findByUserName(userName)
+            && walletId < userRepository.findByUserName(userName)
             .get(0).getWalletSize()
         ){
             List<User> users = userRepository.findByUserName(userName);
-            users.get(0).addBalance(wallet, money);
+            users.get(0).addBalance(walletId, money);
             userRepository.save(users.get(0));
             return true;
         } // TODO - lanzar una excepcion de no autorizado o algo similar
         // customizar esto para que los mensajes no sean tipo rpc
         return false;
     }
-
-    @GetMapping("/verSaldo")
+    // TODO - crear en este metodo las dos consultas, la de ver el saldo
+    // y la de obtener la cantidad de wallets
+    @GetMapping("/wallets")
     Integer verSaldo(
+        @RequestParam(name="walletId", required=true) int walletId,
         @RequestHeader(name="userName", required=true) String userName,
-        @RequestHeader(name="password", required=true) String password,
-        @RequestBody CryptoRequest crypto
-    ){ // TODO - solve this
-        System.out.println(crypto.wallet);
-        System.out.println(userRepository.findByUserName(userName)
-        .get(0).getWalletSize());
-        int money = crypto.crypto;
-        int wallet = crypto.wallet;
+        @RequestHeader(name="password", required=true) String password
+    ){ 
         if(authorizer.isAuthorized(userName, password) 
-            && wallet < userRepository.findByUserName(userName)
+            && walletId < userRepository.findByUserName(userName)
             .get(0).getWalletSize()
         ){
             return userRepository
             .findByUserName(userName)
-            .get(0).getBalanceWallet(wallet);
+            .get(0).getBalanceWallet(walletId);
         }
         return -1;
     }
 
-    @PostMapping("/createWallet")
+    @PostMapping("/wallets")
     Boolean createWallet(
         @RequestHeader(name="userName", required=true) String userName,
         @RequestHeader(name="password", required=true) String password
