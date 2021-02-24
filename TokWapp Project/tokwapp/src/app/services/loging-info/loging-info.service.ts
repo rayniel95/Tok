@@ -24,4 +24,8 @@ export class LogingInfoService {
   authenticate(isAuthenticated: boolean): void {
     this.authenticated = isAuthenticated
   }
+  logout(): void{
+    this.user = new User('', '');
+    this.authenticated = false
+  }
 }

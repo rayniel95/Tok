@@ -52,5 +52,8 @@ export class WalletsComponent implements OnInit {
       })
     })
   }
-
+  logout(){
+    this.userInfo.logout()
+    this.router.navigateByUrl('/loging')
+  }
 }
