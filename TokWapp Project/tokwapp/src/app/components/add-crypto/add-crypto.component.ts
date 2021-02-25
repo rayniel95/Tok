@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup} from '@angular/forms'
 import {Crypto} from 'src/app/models/crypto/crypto'
 import {AdderService} from 'src/app/services/adder/adder.service'
 import { ActivatedRoute, Router } from '@angular/router';
+import { LogingInfoService } from 'src/app/services/loging-info/loging-info.service';
 
 
 @Component({
@@ -17,13 +18,19 @@ export class AddCryptoComponent implements OnInit {
   
   constructor(
     private formBuilder: FormBuilder, private adder: AdderService,
-    private activeRouter: ActivatedRoute, private router: Router
+    private activeRouter: ActivatedRoute, private router: Router,
+    private userInfo: LogingInfoService
   ) {
     this.walletNumber = 0
     this.form = this.formBuilder.group(new Crypto(0))
    }
 
   ngOnInit(): void {
+    if(!this.userInfo.isAuthenticated())
+    {
+      this.router.navigateByUrl('/loging')
+      return
+    }
     this.activeRouter.paramMap.subscribe(
       data=>{
         this.walletNumber = Number(data.get("walletId"))

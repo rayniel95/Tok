@@ -73,7 +73,8 @@ public class CryptoController {
         }
         return -1;
     }
-
+    // TODO - creo que es mejor usar path variables en vez de queries
+    // queda mas organizado la parte de las urls y mas bonito
     @PostMapping("/wallets")
     Boolean createWallet(
         @RequestHeader(name="userName", required=true) String userName,

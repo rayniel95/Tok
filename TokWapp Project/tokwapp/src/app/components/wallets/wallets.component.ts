@@ -14,7 +14,7 @@ const range = (n: number) => Array.from({length: n}, (value, key) => key)
 })
 export class WalletsComponent implements OnInit {
   maxNumberOfWalletOrError: boolean
-  wallets: any
+  wallets: number[]
   
   constructor(
     private counter: CounterService, private router: Router,
@@ -23,13 +23,13 @@ export class WalletsComponent implements OnInit {
     this.wallets = []
     this.maxNumberOfWalletOrError = false
   }
-  // TODO - si no estas autenticado volver al loging
+
   ngOnInit(): void {
     if(!this.userInfo.isAuthenticated()){
       this.router.navigateByUrl('/loging')
       return
     }
-
+  
     this.counter.countWallets().subscribe(data =>{
       this.wallets = range(data)
     })

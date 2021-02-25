@@ -77,7 +77,6 @@ export class CommunicatorService {
     }))
   }
   createWallet(userName: string, password: string){
-    if(userName){console.log("algo")}
     return this.client.post<boolean>(
       url + '/wallets', {},
       {

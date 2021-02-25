@@ -1,8 +1,14 @@
-<div>
-    <p>
-        Founds: {{founds}}
-    </p>
-    <button class="btn btn-primary" (click)="addFounds()">
-        add
-    </button>
+<div class="container">
+    <div class="row">
+        <div class="col-1 text-right">
+            <button class="btn btn-outline-primary" (click)="addFounds()">
+                add
+            </button>
+        </div>
+        <div class="col-11">
+            <p class="text-left">
+                Founds: {{founds}}
+            </p>
+        </div>
+    </div>
 </div>
