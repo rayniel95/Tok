@@ -10,7 +10,9 @@ import org.mindrot.jbcrypt.BCrypt;
 import tok.models.User;
 
 
-
+/**
+ * La siguiente clase es un conjunto de tests para el autorizador
+ */
 @SpringBootTest
 class AuthorizerTest{
     @Autowired 

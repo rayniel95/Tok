@@ -10,7 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 
-// NOTE - some repository tests
+/**
+ * La siguiente clase es un conjunto de test para el repositorio.
+ */
 @SpringBootTest
 class UserRepositoryTest {
     
