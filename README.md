@@ -8,19 +8,19 @@ Simple Spring Boot rest application with Angular and MongoDB.
 
 ### Execute rest server
 
-Execute gradle bootRun command line inside TokServer folder, it will start test server. Test server will be accesible in http://localhost:8080.
+Execute **gradle bootRun** command line inside TokServer folder, it will start test server. Test server will be accesible in http://localhost:8080.
 
 ### Execute client
 
-Execute ng serve command line inside tokwapp folder, it will start test server. Test server will be accesible in http://localhost:4200.
+Execute **ng serve** command line inside tokwapp folder, it will start test server. Test server will be accesible in http://localhost:4200.
 
 Username: ray
 
 Password: pass
 
-Note: if you will to use npx execute npx ng serve.
+Note: if you will to use npx execute **npx ng serve**.
 
-### Important
+### **Important**
 
 You will need mongod daemon executing in background.
 
