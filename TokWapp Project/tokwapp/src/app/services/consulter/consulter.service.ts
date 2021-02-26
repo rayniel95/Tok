@@ -4,6 +4,12 @@ import { LogingInfoService } from '../loging-info/loging-info.service';
 import {Observable} from 'rxjs'
 
 
+/**
+ * Un servicio que tiene por objetivo consultar la cantidad de fondos en una
+ * wallet determinada. Para ello utiliza la informacion del usuario almacenada
+ * en el servicio de LigingInfoService y los metodos del servicio de 
+ * comunicacion.
+ */
 @Injectable({
   providedIn: 'root' // NOTE - no debe estar en el root
 })

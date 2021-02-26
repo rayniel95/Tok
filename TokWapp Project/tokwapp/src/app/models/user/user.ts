@@ -1,3 +1,8 @@
+
+/**
+ * Modelo del usuario utilizado para almacenar informacion del mismo y
+ * crear el formulario para el loging.
+ */
 export class User {
     userName: string;
     password: string;

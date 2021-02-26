@@ -3,7 +3,13 @@ import {CommunicatorService} from 'src/app/services/communicator/communicator.se
 import { LogingInfoService } from '../loging-info/loging-info.service';
 import {Observable} from 'rxjs'
 
-
+/**
+ * Un servicio simple que sirve como wrapper para el servicio de comunicacion.
+ * Usa el servicio de comunicacion y el servicio LogingInfoService (donde se
+ * almacena la informacion del usuario autenticado) para realizar los pedidos
+ * para anadir monedas a una billetera. Devuelve el mismo observable que el 
+ * servicio de comunicacion.
+ */
 @Injectable({
   providedIn: 'root'
 })
