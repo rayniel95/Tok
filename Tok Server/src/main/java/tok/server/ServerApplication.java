@@ -48,8 +48,6 @@ public class ServerApplication {
 	"limpia" la base de datos y se crea un nuevo usuario para almacenar. Notar
 	el uso de BCrypt, esta libreria permite el hasheo de la contrasena, de esta
 	forma se guarda el hash de la contrasena en vez de la contrasena en si. 
-	NOTE - En lo personal pienso que lo mejor que se podria hacer es usar 
-	cifrado asimetrico.
 	*/
 	@Bean
     public CommandLineRunner setup() {

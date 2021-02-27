@@ -8,10 +8,10 @@ import {map} from 'rxjs/operators'
 
 /**
  * Simple servicio para el envio de los request a la api rest cada
- * metodo que provee esta relacionado con un endopoint y recibe usuario y
+ * metodo que provee esta relacionado con un endpoint y recibe usuario y
  * contrasena para autenticarse. Retorna un observable. Un observable no es
  * mas que un objeto que eventualmente realizara una accion, dicha accion
- * compienza a realzarse luego de que algo se subscriba, esto es ejecutar
+ * compienza a realizarse luego de que algo se subscriba, esto es ejecutar
  * el metodo subscribe, una vez que se ejecuta el metodo subscribe de forma
  * asincrona el observable comienza a trabajar y por cada valor que este genere
  * se ejecuta una funcion callback tambien de manera asincrona. Los observables
@@ -25,18 +25,6 @@ export class CommunicatorService {
 
   constructor(private client: HttpClient) { 
   }
-  // NOTE - aqui hay dos formas de implementar este patron, cual de las dos mas
-  // interesantes, la primera es devolver observables a todo el que quiera
-  // ejecutar un metodo, creandose un unico observable que va a ser suscrito
-  // por un unico metodo en algun componente, una vez se realice la suscripcion
-  // se ejecuta el observable cuya salida sera transformada una y otra vez
-  // hasta que sea ejecutado el subscribe, el otro metodo es utilizar algun
-  // subject el cual sera subscrito al observable del metodo que se desea
-  // ejecutar y devolver este subject, este patron es mejor que el primero
-  // en cuanto a performance ya que el ultimo observable del stack y asi 
-  // sucesivamente se estaran ejecutando, el subject sera una cache de las
-  // respuestas de cada observable.
-
   /**
    * Devuelve un observable que realizara un pedido get a la api rest, 
    * a la URL /wallets?walletId=value se envia el usuario y contrasena en los

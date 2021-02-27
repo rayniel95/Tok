@@ -11,7 +11,7 @@ import {Observable} from 'rxjs'
  * comunicacion.
  */
 @Injectable({
-  providedIn: 'root' // NOTE - no debe estar en el root
+  providedIn: 'root' 
 })
 export class ConsulterService {
 

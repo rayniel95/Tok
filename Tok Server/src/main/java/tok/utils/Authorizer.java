@@ -9,7 +9,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 
 /*
-Notar que la clase se decora con servicio, un servicio no es mas que un
+Notar que la clase se decora como servicio, un servicio no es mas que un
 objeto que provee la logica del negocio en la aplicacion. Notar que es
 un Bean.
 */

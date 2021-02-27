@@ -34,8 +34,8 @@ export class AddCryptoComponent implements OnInit {
    }
   /**
    * Metodo ejecutado al inicializar la componente. En caso de que el usuario
-   * no este autenticado se navega hacia la vista del loging, en caso de estar
-   * autenticado se obtiene el identificado de la wallet el cual se encontrara
+   * no este autenticado se navega hacia la vista del login, en caso de estar
+   * autenticado se obtiene el identificador de la wallet el cual se encontrara
    * en la URL. Para ello utilizando un servicio del router se accede a los
    * paramtros en la URL y obtenemos el valor del identificador.
    */

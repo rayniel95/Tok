@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 /*
 Un repositorio de MongoDB es una especie de interfaz de acceso a la base de
-datos. Puede ser visto como una la propio coleccion de documentos o la propia
+datos. Puede ser visto como una coleccion de documentos o la propia
 base de datos. Debe existir un repositorio por cada collecion. Entre las 
 tareas del repositorio no solo se encuentran las de realizar consultas, 
 sino tambien las de eliminar, anadir, actualizar, etc. Como se puede 

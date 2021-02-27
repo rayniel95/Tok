@@ -15,9 +15,6 @@ class ServerApplicationTests {
 
 	@Test
 	void contextLoads() {
-		// repository.deleteAll();
-		// User myUser = repository.save(new User("ray", "[ass"));
-		// assertThat(myUser.getUserName()).isEqualTo("ray");
 	}
 
 }

@@ -6,7 +6,7 @@ import {User} from "src/app/models/user/user"
  * Servicio encargado del almacenamiento de informacion. Se almacena el nombre
  * del usuario y la contrasena, tambien si el usuario se encuentra autenticado
  * o no, de esta forma otros servicios y las distintas componentes pueden hacer
- * uso de esta informacion
+ * uso de esta informacion.
  */
 @Injectable({
   providedIn: 'root'

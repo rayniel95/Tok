@@ -59,7 +59,7 @@ export class ConsultFoundsComponent implements OnInit, OnChanges {
   /**
    * Metodo que realiza una peticion al servidor. Notar como el servicio
    * Consulter devuelve un observable al cual nos subscribimos para ejecutarlo
-   * y una vez este a retornado un valor de forma asincrona se ejecuta la 
+   * y una vez este a retornado un valor, de forma asincrona se ejecuta la 
    * funcion que se encuentra en el subscribe, la cual actualiza la propiedad
    * found con los fondos de la wallet que son mostrados en la vista.
    */

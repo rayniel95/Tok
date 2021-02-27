@@ -7,13 +7,13 @@ import {Router} from '@angular/router'
 
 /**
  * Componente encargada de gestionar toda la logica relacionada con la vista
- * de autenticacion (loging). Para ello utiliza dos propiedades, form que
+ * de autenticacion (login). Para ello utiliza dos propiedades, form que
  * es el formulario (creado con el modelo User) que se utiliza para
- * construir la vista y wrongUserOrPassword utiliaza en el caso de que el
+ * construir la vista y wrongUserOrPassword utilizada en el caso de que el
  * nombre o la contrasena sean incorrectos poder mostrar una alerta. El 
  * formulario se construye utilizando un formBuilder a partir del modelo
  * usuario, este formBuilder crea un FormGroup, que no es mas que una especie
- * de representacion del modelo User en un formulario.
+ * de representacion del modelo User en un formulario de la vista.
  */
 @Component({
   selector: 'app-loging',
@@ -40,12 +40,11 @@ export class LogingComponent implements OnInit {
       this.router.navigateByUrl('/wallets')
     }
   }
-  // TODO - esto deberia hacerlo un servicio
   /**
    * Metodo que se ejecuta cuando el usuario hace submit del formulario. Este
    * metodo recibe un objeto que posee las mismas propiedades que el modelo
    * User y cuyos valores seran los introducidos por el usuario en el 
-   * formulario. Notese como de cierta forma el formulario de construye 
+   * formulario. Notese como de cierta forma el formulario se construye 
    * utilizando el modelo User y luego, una vez se han introducido los valores
    * para cada input (que representan cada propiedad del modelo) se devuelve
    * un objeto similar con los valores de las propiedades. En el caso de que

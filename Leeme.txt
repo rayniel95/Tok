@@ -1,0 +1,47 @@
+Posibles mejoras en el servidor:
+
+Una de las mejoras que se podrian realizar en el servidor es en cuanto
+a los controladores del mismo, en este caso se podrian crear servicios
+de Spring encargados de realizar la logica del negocio. Si bien Spring
+no obliga a seguir este patron, es una de las "buenas practicas" de uso
+de este framework, aparte de mejorar la modularidad, belleza del codigo
+y la eficiencia en general.
+
+Otra mejora, podria ser en cuanto a las URL de los endpoint, en este caso
+en vez de utilizar las queries de la URL para preguntar por el identificador
+de la wallet podriamos utilizar el propio path, o sea, la propia URL, si bien
+este metodo da como resultado URLs mas largas, permite una mayor belleza de
+la aplicacion y podriamos eliminar el endpoint /numberOfWallets sustituyendolo
+por una peticion GET al /wallets, mientras que las restantes request sobre
+una wallet se realizarian a un endpoint /wallets/{walletId}.
+
+Una sugerencia que he pensado como resultado de mi trabajo en blockchain es
+el uso de cifrado asimetrico para garantizar la autenticacion, esto es, 
+aparte del uso del TLS podriamos, en vez de enviar el usuario y la contrasena
+enviar un token (o la informacion en general) firmado (en el navegador) por 
+el usuario, el sevidor podria saber a que usuario pertenece utilizando la 
+clave publica del mismo, que se almacenaria en la base de datos.
+
+Tambien para obtener una mayor belleza y apegarnos a las "buenas practicas"
+los valores de retorno de los controladores en caso de que la request sea
+rechazada podrian ser codigos HTTP. Esto ultimo permitiria una mayor 
+"independencia" entre el cliente y el servidor o una mayor genericidad por
+parte del cliente.
+
+
+Posibles mejoras en el cliente:
+
+Existen dos formas fundamentales de implementar este patron observable, 
+cual de las dos mas interesantes, la primera es devolver observables a 
+todo el que quiera ejecutar un metodo del servicio de comunicacion, 
+creandose un unico observable que va a ser suscrito por un unico metodo 
+en algun componente, una vez se realice la suscripcion se ejecuta el 
+observable cuya salida sera transformada una y otra vez hasta que sea 
+ejecutado la funcion del subscribe, el otro metodo es utilizar algun 
+subject el cual sera subscrito al observable del metodo que se desea
+ejecutar y devolver este subject, este patron es mejor que el primero
+en cuanto a performance ya que el ultimo observable del stack y asi 
+sucesivamente se estaran ejecutando, el subject sera una cache de las
+respuestas de cada observable cuyos valores podran ser obtenidos por otros
+metodos que se subscriban al subject.
+

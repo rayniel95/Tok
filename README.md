@@ -22,7 +22,9 @@ Note: if you will to use npx execute **npx ng serve**.
 
 ### **Important**
 
-You will need mongod daemon executing in background.
+1. You will need **mongod** daemon executing in background.
+
+2. You need to execute the application in localhost.
 
 ## Requirements
 
@@ -57,3 +59,15 @@ Angular:
 See package.json inside tokwapp folder.
 
 jbcrypt: 0.4
+
+Gradle:
+
+Gradle 6.8.2
+
+Node: v14.15.4
+
+npm: 6.14.10
+
+### Some improvements
+
+See Leeme.txt
